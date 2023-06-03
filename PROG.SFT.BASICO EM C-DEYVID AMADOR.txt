@@ -1,0 +1,99 @@
+//PT 1-----------
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+void printParentPid() {
+    printf("pid do Pai: %d\n", getpid());
+}
+
+void printChildPid() {
+    printf("pid do Filho: %d\n", getpid());
+}
+
+int main(void) {
+    int i;
+    pid_t pid;
+
+    if ((pid = fork()) < 0) {
+        perror("fork");
+        exit(1);
+    }
+    if (pid == 0) {
+        printChildPid();
+    } else {
+        printParentPid();
+    }
+    printf("Este print sera executado com os dois processos \n\n");
+    exit(0);
+}
+
+//PT 2---------
+
+#include <stdio.h>
+#include <string.h>
+
+int OpenComm(char *portName) {
+    
+    printf("Abrindo porta ... \n", portName);
+    
+    return 1;
+}
+
+int SetCommState(int baudRate, int byteSize, int stopBits, int parity) {
+    
+    printf("Configurando  porta serial...\n");
+    
+    return 1;
+}
+
+int GetCommState() {
+   
+    printf("Obtendo estado da porta...\n");
+    
+    return 1;
+}
+
+int GetCommError() {
+    
+    printf("Obtendo erros da porta...\n");
+    
+    return 1;
+}
+
+void CloseComm() {
+    
+    printf("Fechando porta ...\n");
+    
+}
+
+int main() {
+    char portName[] = "COM1"; 
+
+    if (OpenComm(portName)) {
+        printf("Porta serial aberta !\n");
+
+        
+        if (SetCommState(9600, 8, 1, 0)) {
+            printf("Estado da porta  configurado !\n");
+
+            
+            GetCommState();
+
+           
+            GetCommError();
+
+            
+            CloseComm();
+            printf("Porta  fechada!\n");
+        }
+    }
+    else {
+        printf("Falha ao abrir porta !\n");
+    }
+
+    return 0;
+}
+
